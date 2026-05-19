@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The LFBJJ Notebook — Whitelist</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  /* ==========================================================
+     Page shell
+     ========================================================== */
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 32px 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ==========================================================
+     Header — logo
+     ========================================================== */
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 96px;
+  }
+
+  .header__logo {
+    width: 88px;
+    height: 88px;
+    display: block;
+  }
+
+  .header__wordmark {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .header__rule {
+    width: 32px;
+    height: 0;
+    border-top: 0.5px solid var(--ink);
+    margin-top: 8px;
+  }
+
+  /* ==========================================================
+     Section rhythm
+     ========================================================== */
+  .section {
+    padding: 0 0 96px;
+  }
+
+  .section + .section {
+    border-top: 0.5px solid var(--ink-line);
+    padding-top: 96px;
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 24px;
+  }
+
+  /* ==========================================================
+     Hook
+     ========================================================== */
+  .hook__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(40px, 5.6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 32px;
+    text-wrap: pretty;
+    max-width: 18ch;
+  }
+
+  .hook__lede {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  /* ==========================================================
+     Value
+     ========================================================== */
+  .value__lead {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(24px, 2.6vw, 30px);
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 0 0 40px;
+    max-width: 32ch;
+  }
+
+  .value__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .value__item {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 0.5px solid var(--ink-line);
+    align-items: baseline;
+  }
+
+  .value__item:last-child {
+    border-bottom: 0.5px solid var(--ink-line);
+  }
+
+  .value__num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .value__body h3 {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0 0 6px;
+    letter-spacing: 0;
+  }
+
+  .value__body p {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    margin: 0;
+    max-width: 56ch;
+  }
+
+  /* ==========================================================
+     Credibility
+     ========================================================== */
+  .cred {
+    max-width: 56ch;
+  }
+
+  .cred__line {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin: 0 0 24px;
+  }
+
+  .cred__line strong {
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  .cred__pull {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 2.2vw, 26px);
+    line-height: 1.35;
+    color: var(--ink);
+    margin: 32px 0 0;
+    padding: 24px 0 0;
+    border-top: 0.5px solid var(--ink-line);
+    max-width: 36ch;
+  }
+
+  /* ==========================================================
+     CTA — email capture
+     ========================================================== */
+  .cta {
+    padding-top: 96px;
+    border-top: 0.5px solid var(--ink-line);
+    padding-bottom: 64px;
+  }
+
+  .cta__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 3.2vw, 38px);
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 0 0 32px;
+    max-width: 22ch;
+  }
+
+  .form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    max-width: 540px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .form__input {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 18px 0;
+    outline: none;
+    width: 100%;
+  }
+
+  .form__input::placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  .form__btn {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 18px 0 18px 24px;
+    cursor: pointer;
+    transition: opacity var(--dur-quick) var(--ease-ink);
+    white-space: nowrap;
+  }
+
+  .form__btn:hover {
+    opacity: 0.6;
+  }
+
+  .form__btn::after {
+    content: "  →";
+    font-family: var(--font-body);
+    font-weight: 300;
+  }
+
+  .cta__fine {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--ink-faint);
+    margin: 24px 0 0;
+    max-width: 540px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 16px;
+  }
+
+  .cta__fine span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cta__fine span + span::before {
+    content: "·";
+    color: var(--ink-line);
+    margin-right: 8px;
+  }
+
+  /* Confirmation state */
+  .confirm {
+    display: none;
+    border-top: 0.5px solid var(--ink-line);
+    border-bottom: 0.5px solid var(--ink-line);
+    padding: 32px 0;
+    max-width: 540px;
+    margin-top: 0;
+  }
+
+  .confirm.is-shown {
+    display: block;
+    animation: fade 320ms var(--ease-ink);
+  }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .confirm__eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 12px;
+  }
+
+  .confirm__line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .form-wrap.is-submitted .form,
+  .form-wrap.is-submitted .cta__fine {
+    display: none;
+  }
+
+  /* ==========================================================
+     Footer
+     ========================================================== */
+  .footer {
+    margin-top: auto;
+    padding: 48px 0 64px;
+    border-top: 0.5px solid var(--ink-line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer__colophon {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .footer__colophon span {
+    color: var(--ink-line);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .footer__social a {
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    transition: opacity var(--dur-quick) var(--ease-ink);
+  }
+
+  .footer__social a:hover { opacity: 0.6; }
+
+  .footer__social svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 0.75;
+    fill: none;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+
+  /* ==========================================================
+     Mobile
+     ========================================================== */
+  @media (max-width: 600px) {
+    .page { padding: 40px 24px 0; }
+    .header { padding-bottom: 64px; }
+    .section { padding-bottom: 64px; }
+    .section + .section { padding-top: 64px; }
+    .cta { padding-top: 64px; }
+    .value__item { grid-template-columns: 48px 1fr; gap: 16px; }
+    .form { grid-template-columns: 1fr; }
+    .form__btn {
+      padding: 16px 0;
+      text-align: left;
+      border-top: 0.5px solid var(--ink-line);
+    }
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- ============ Header ============ -->
+    <header class="header" data-screen-label="Header">
+      <img class="header__logo" src="assets/logo-mark-light.svg" alt="Looking for Brazilian Jiu-Jitsu">
+      <p class="header__wordmark">Looking for Brazilian Jiu-Jitsu</p>
+      <div class="header__rule"></div>
+    </header>
+
+    <!-- ============ Hook ============ -->
+    <section class="section hook" data-screen-label="01 Hook">
+      <span class="eyebrow">The LFBJJ Notebook · Volume I</span>
+      <h1 class="hook__title">You train three times a week. But do you actually know what you're <em>improving?</em></h1>
+      <p class="hook__lede">Answer eight quick questions to find out if your training has a system — or just habits.</p>
+    </section>
+
+    <!-- ============ Value ============ -->
+    <section class="section value" data-screen-label="02 Value">
+      <span class="eyebrow">What the assessment measures</span>
+      <p class="value__lead">Three things separate practitioners who progress from practitioners who repeat.</p>
+
+      <ol class="value__list">
+        <li class="value__item">
+          <span class="value__num"><em>I.</em></span>
+          <div class="value__body">
+            <h3>Note-taking consistency</h3>
+            <p>How often you capture what you learned, and whether you can find it again three months later.</p>
+          </div>
+        </li>
+        <li class="value__item">
+          <span class="value__num"><em>II.</em></span>
+          <div class="value__body">
+            <h3>Technical retention between sessions</h3>
+            <p>What stays with you from one roll to the next — and what slips, untested, out of the body.</p>
+          </div>
+        </li>
+        <li class="value__item">
+          <span class="value__num"><em>III.</em></span>
+          <div class="value__body">
+            <h3>Belt-to-belt progression strategy</h3>
+            <p>Whether your training is shaped around the belt you're earning, or the belt you already wear.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ Credibility ============ -->
+    <section class="section cred-section" data-screen-label="03 Credibility">
+      <span class="eyebrow">Colophon</span>
+      <div class="cred">
+        <p class="cred__line">Built by a <strong>purple belt</strong> with five years on the mat. The LFBJJ Method is the first belt-specific note-taking system for practitioners serious about measurable progress.</p>
+        <p class="cred__pull">One volume per belt. The method is on page nine. Everything after is yours.</p>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" data-screen-label="04 CTA">
+      <span class="eyebrow">Reserve a place on the whitelist</span>
+      <h2 class="cta__title">First access to a numbered first edition.</h2>
+
+      <div class="form-wrap" id="formWrap">
+        <form class="form" id="form" novalidate>
+          <input
+            class="form__input"
+            id="email"
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required>
+          <button class="form__btn" type="submit">Join the whitelist</button>
+        </form>
+
+        <p class="cta__fine">
+          <span>Free to join.</span>
+          <span>First access to the limited first edition.</span>
+          <span>No spam.</span>
+        </p>
+
+        <div class="confirm" id="confirm" role="status" aria-live="polite">
+          <p class="confirm__eyebrow">Reserved · Position <span id="position">—</span></p>
+          <p class="confirm__line">Your place is held. We'll write once, when Volume I opens.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Footer ============ -->
+    <footer class="footer" data-screen-label="Footer">
+      <div class="footer__colophon">
+        <span>Lisbon</span>
+        ·
+        <span>MMXXVI</span>
+      </div>
+      <nav class="footer__social" aria-label="Elsewhere">
+        <a href="#" aria-label="Substack">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 5h18M3 11h18M3 17l9 4 9-4v-2H3v2z"/>
+          </svg>
+          <span>Substack</span>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18"/>
+            <circle cx="12" cy="12" r="4.5"/>
+            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
+      </nav>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById('form');
+      const wrap = document.getElementById('formWrap');
+      const confirmEl = document.getElementById('confirm');
+      const position = document.getElementById('position');
+      const input = document.getElementById('email');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const value = input.value.trim();
+        if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          input.focus();
+          input.style.borderBottom = '';
+          return;
+        }
+        // Quiet, deterministic-feeling reservation number
+        const seed = [...value].reduce((a, c) => a + c.charCodeAt(0), 0);
+        const num = 100 + (seed % 380);
+        position.textContent = String(num).padStart(3, '0');
+        wrap.classList.add('is-submitted');
+        confirmEl.classList.add('is-shown');
+      });
+    })();
+  </script>
+</body>
+</html>

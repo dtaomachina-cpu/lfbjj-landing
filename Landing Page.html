@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LFBJJ — A note-taking method for Brazilian Jiu-Jitsu</title>
+<meta name="description" content="Document your sessions. Transform them into progress. LFBJJ is a note-taking system designed for grapplers from white to black belt.">
+<meta property="og:title" content="LFBJJ — A note-taking method for Brazilian Jiu-Jitsu">
+<meta property="og:description" content="Document your sessions. Transform them into progress. LFBJJ is a note-taking system designed for grapplers.">
+<meta property="og:image" content="https://placeholder.com/1200x630">
+<meta property="og:url" content="https://lookingforbrazilianjujitsu.com">
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  /* ==========================================================
+     Inverted palette — full ink, paper text
+     ========================================================== */
+  :root {
+    --bg-page: #0a0a0a;
+    --fg-page: #faf9f6;
+    --fg-muted: #b8b4a8;
+    --fg-faint-inv: #6e6a62;
+    --line-inv: #2a2925;
+    --line-soft-inv: #1c1b18;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg-page);
+    color: var(--fg-page);
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: var(--font-body);
+    font-weight: 300;
+  }
+
+  ::selection { background: var(--paper); color: var(--ink); }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 32px 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--fg-faint-inv);
+    margin: 0 0 24px;
+  }
+
+  /* ==========================================================
+     ABOVE THE FOLD — hero
+     ========================================================== */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px 0 144px;
+    min-height: calc(100vh - 56px);
+  }
+
+  .hero__top {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--fg-faint-inv);
+    margin: 0 0 56px;
+  }
+
+  /* Enso + notebook composition */
+  .hero__visual {
+    width: 220px;
+    height: 220px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 56px;
+  }
+
+  .hero__enso {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+  }
+
+  .hero__notebook {
+    position: relative;
+    width: 78px;
+    height: 104px;
+  }
+
+  .hero__headline {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.28;
+    letter-spacing: -0.005em;
+    color: var(--fg-page);
+    margin: 0 0 32px;
+    max-width: 44ch;
+    text-wrap: pretty;
+  }
+
+  .hero__sub {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--fg-muted);
+    margin: 0 0 56px;
+    max-width: 56ch;
+  }
+
+  .hero__sub strong {
+    color: var(--fg-page);
+    font-weight: 400;
+  }
+
+  .cta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-primary {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bg-page);
+    background: var(--fg-page);
+    border: none;
+    border-radius: 0;
+    padding: 22px 40px;
+    cursor: pointer;
+    transition: opacity var(--dur-quick) var(--ease-ink);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .cta-fine {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--fg-faint-inv);
+    margin: 0;
+    text-align: center;
+  }
+
+  .cta-fine span {
+    color: var(--line-inv);
+    margin: 0 8px;
+  }
+
+  .cta-scarcity {
+    color: var(--fg-muted);
+    margin-bottom: 8px;
+    max-width: 56ch;
+  }
+
+  /* ==========================================================
+     Section frame
+     ========================================================== */
+  .section {
+    padding: 144px 0;
+    border-top: 0.5px solid var(--line-inv);
+  }
+
+  .section__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.008em;
+    color: var(--fg-page);
+    margin: 0 0 64px;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  /* ==========================================================
+     Proof — three lines
+     ========================================================== */
+  .proof__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .proof__item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    align-items: baseline;
+    padding: 28px 0;
+    border-top: 0.5px solid var(--line-inv);
+  }
+
+  .proof__item:last-child { border-bottom: 0.5px solid var(--line-inv); }
+
+  .proof__num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--fg-faint-inv);
+  }
+
+  .proof__line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 28px);
+    line-height: 1.25;
+    color: var(--fg-page);
+    margin: 0;
+  }
+
+  /* ==========================================================
+     Mechanism — flow
+     ========================================================== */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    align-items: stretch;
+    border-top: 0.5px solid var(--line-inv);
+    border-bottom: 0.5px solid var(--line-inv);
+  }
+
+  .flow__step {
+    padding: 40px 24px;
+    border-right: 0.5px solid var(--line-inv);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+  }
+
+  .flow__step:last-child { border-right: none; }
+
+  .flow__num {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--fg-faint-inv);
+  }
+
+  .flow__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.15;
+    color: var(--fg-page);
+    margin: 0;
+  }
+
+  .flow__meta {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--fg-faint-inv);
+    margin: 0;
+  }
+
+  /* arrow on row */
+  .flow__step:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -7px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-page);
+    color: var(--fg-faint-inv);
+    font-size: 12px;
+    padding: 0 4px;
+    line-height: 1;
+  }
+
+  /* ==========================================================
+     Scarcity
+     ========================================================== */
+  .scarcity {
+    text-align: center;
+    padding: 96px 0;
+    border-top: 0.5px solid var(--line-inv);
+  }
+
+  .scarcity__lines {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 24px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-page);
+  }
+
+  .scarcity__lines span {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .scarcity__lines span + span::before {
+    content: "·";
+    color: var(--line-inv);
+  }
+
+  /* ==========================================================
+     The Ask
+     ========================================================== */
+  .ask {
+    padding: 144px 0 96px;
+    border-top: 0.5px solid var(--line-inv);
+    text-align: center;
+  }
+
+  .ask__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    color: var(--fg-page);
+    margin: 0 0 56px;
+    max-width: 18ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .form__input {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--fg-page);
+    background: transparent;
+    border: none;
+    border-bottom: 0.5px solid var(--fg-page);
+    border-radius: 0;
+    padding: 18px 4px;
+    outline: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  .form__input::placeholder {
+    color: var(--fg-faint-inv);
+    font-style: italic;
+  }
+
+  .form__btn {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bg-page);
+    background: var(--fg-page);
+    border: none;
+    border-radius: 0;
+    padding: 22px 0;
+    cursor: pointer;
+    transition: opacity var(--dur-quick) var(--ease-ink);
+    margin-top: 8px;
+  }
+
+  .form__btn:hover { opacity: 0.85; }
+
+  .confirm {
+    display: none;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 32px 0;
+    border-top: 0.5px solid var(--line-inv);
+    border-bottom: 0.5px solid var(--line-inv);
+  }
+
+  .confirm.is-shown {
+    display: block;
+    animation: fade 320ms var(--ease-ink);
+  }
+
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+  .confirm__eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--fg-faint-inv);
+    margin: 0 0 12px;
+  }
+
+  .confirm__line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--fg-page);
+    margin: 0;
+  }
+
+  .form-wrap.is-submitted .form { display: none; }
+
+  /* ==========================================================
+     Footer
+     ========================================================== */
+  .footer {
+    margin-top: auto;
+    padding: 32px 0 48px;
+    border-top: 0.5px solid var(--line-inv);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--fg-faint-inv);
+  }
+
+  .footer__social { display: flex; gap: 24px; align-items: center; }
+
+  .footer__social a {
+    color: var(--fg-page);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    transition: opacity var(--dur-quick) var(--ease-ink);
+  }
+
+  .footer__social a:hover { opacity: 0.6; }
+
+  .footer__social svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 0.75;
+    fill: none;
+  }
+
+  /* ==========================================================
+     Mobile
+     ========================================================== */
+  @media (max-width: 720px) {
+    .page { padding: 32px 24px 0; }
+    .hero { padding: 16px 0 96px; min-height: auto; }
+    .hero__visual { width: 180px; height: 180px; margin-bottom: 40px; }
+    .section { padding: 96px 0; }
+    .ask { padding: 96px 0 64px; }
+    .proof__item { grid-template-columns: 56px 1fr; gap: 16px; }
+    .flow {
+      grid-template-columns: 1fr;
+      border-bottom: none;
+    }
+    .flow__step {
+      border-right: none;
+      border-bottom: 0.5px solid var(--line-inv);
+      padding: 24px 0;
+    }
+    .flow__step:last-child { border-bottom: 0.5px solid var(--line-inv); }
+    .flow__step:not(:last-child)::after {
+      content: "↓";
+      right: 50%;
+      top: auto;
+      bottom: -7px;
+      transform: translateX(50%);
+    }
+    .scarcity__lines { font-size: 10px; gap: 0 16px; }
+    .scarcity__lines span { gap: 16px; }
+  }
+</style>
+</head>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+    <rect width="400" height="400" fill="#0a0a0a"/>
+    <circle cx="200" cy="200" r="110" fill="none" stroke="#faf9f6" stroke-width="2"
+            stroke-linecap="round" stroke-dasharray="640 60" stroke-dashoffset="-30"
+            transform="rotate(-15 200 200)"/>
+    <text x="200" y="345" text-anchor="middle"
+          font-family="Georgia, serif" font-style="italic" font-weight="300"
+          font-size="14" letter-spacing="3" fill="#faf9f6">LFBJJ</text>
+  </svg>
+</template>
+<body>
+  <main class="page">
+
+    <!-- ================================================================
+         ABOVE THE FOLD
+         ================================================================ -->
+    <section class="hero" data-screen-label="01 Hero">
+      <p class="hero__top">The LFBJJ Notebook · Vol. I — Whitelist</p>
+
+      <!-- Enso + minimal notebook -->
+      <div class="hero__visual" aria-hidden="true">
+        <svg class="hero__enso" viewBox="0 0 220 220">
+          <!-- Enso: open brushed circle, hand-feel via dasharray gap at start -->
+          <circle cx="110" cy="110" r="92"
+                  fill="none"
+                  stroke="#faf9f6"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-dasharray="540 50"
+                  stroke-dashoffset="-30"
+                  transform="rotate(-15 110 110)"/>
+          <circle cx="110" cy="110" r="92"
+                  fill="none"
+                  stroke="#faf9f6"
+                  stroke-width="0.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="535 55"
+                  stroke-dashoffset="-26"
+                  transform="rotate(-14 110 110)"
+                  opacity="0.5"/>
+        </svg>
+
+        <svg class="hero__notebook" viewBox="0 0 78 104" width="78" height="104" style="position: relative; z-index: 2;">
+          <defs>
+            <filter id="notebook-shadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="0" dy="8" stdDeviation="4" flood-opacity="0.3" flood-color="#000000"/>
+            </filter>
+          </defs>
+          <!-- Notebook cover background -->
+          <rect x="0" y="0" width="78" height="104" fill="#0a0a0a" stroke="#faf9f6" stroke-width="0.5" filter="url(#notebook-shadow)"/>
+          <!-- Left spine/edge highlight -->
+          <line x1="8" y1="0" x2="8" y2="104" stroke="#faf9f6" stroke-width="0.5" opacity="0.4"/>
+          <!-- Title -->
+          <text x="39" y="20" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-weight="300" font-size="8" letter-spacing="0.18em" fill="#faf9f6">LFBJJ</text>
+          <!-- Divider line -->
+          <line x1="31" y1="42" x2="47" y2="42" stroke="#faf9f6" stroke-width="0.5"/>
+          <!-- Volume number -->
+          <text x="39" y="85" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-weight="300" font-size="14" fill="#faf9f6">I</text>
+        </svg>
+      </div>
+
+      <h1 class="hero__headline">Stop repeating the same mistakes on the mat.</h1>
+      <p class="hero__sub" style="font-size: 18px; margin-bottom: 56px; font-weight: 400; color: var(--fg-page);">Document your sessions. Transform them into progress.</p>
+
+      <p class="hero__sub">A note-taking system designed for grapplers. From white to black. One session at a time.</p>
+
+      <div class="cta-block">
+        <p class="cta-fine cta-scarcity">Spots are filling fast. <span>·</span> Whitelist closes July 22. <span>·</span> First edition limited to 500 practitioners.</p>
+        <a href="#reserve" class="btn-primary">RESERVE YOUR SPOT · WHITELIST CLOSES JULY 22</a>
+        <p class="cta-fine">Free. <span>·</span> Early access to The LFBJJ Notebook Vol. I. <span>·</span> No spam.</p>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SECTION 2 — Proof by logic
+         ================================================================ -->
+    <section class="section proof" data-screen-label="02 Proof">
+      <h2 class="section__title">Three things separate grapplers who progress from grapplers who repeat.</h2>
+      <ol class="proof__list">
+        <li class="proof__item">
+          <span class="proof__num"><em>I.</em></span>
+          <p class="proof__line">You write down what your coach corrected today.</p>
+        </li>
+        <li class="proof__item">
+          <span class="proof__num"><em>II.</em></span>
+          <p class="proof__line">You spot the pattern across three months of rolling.</p>
+        </li>
+        <li class="proof__item">
+          <span class="proof__num"><em>III.</em></span>
+          <p class="proof__line">You arrive Wednesday with a question, Friday with an answer.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ================================================================
+         SECTION 3 — The Mechanism
+         ================================================================ -->
+    <section class="section mechanism" data-screen-label="03 Mechanism">
+      <h2 class="section__title">How The LFBJJ Method works.</h2>
+      <ol class="flow">
+        <li class="flow__step">
+          <span class="flow__num">01</span>
+          <p class="flow__name"><em>Train.</em></p>
+          <p class="flow__meta">On the mat.</p>
+        </li>
+        <li class="flow__step">
+          <span class="flow__num">02</span>
+          <p class="flow__name"><em>Document.</em></p>
+          <p class="flow__meta">After each session.</p>
+        </li>
+        <li class="flow__step">
+          <span class="flow__num">03</span>
+          <p class="flow__name"><em>Identify your problem.</em></p>
+          <p class="flow__meta">One per session.</p>
+        </li>
+        <li class="flow__step">
+          <span class="flow__num">04</span>
+          <p class="flow__name"><em>Solve it next session.</em></p>
+          <p class="flow__meta">Then repeat.</p>
+        </li>
+      </ol>
+    </section>
+
+
+    <!-- ================================================================
+         SECTION 5 — The Ask
+         ================================================================ -->
+    <section class="ask" id="reserve" data-screen-label="05 Ask">
+      <h2 class="ask__title">Reserve your spot.</h2>
+
+      <div class="form-wrap" id="formWrap">
+        <!-- TODO: Configure form action with Substack endpoint or webhook -->
+        <!-- Options: (1) Direct Substack form, (2) Webhook to email service, (3) Custom backend -->
+        <form class="form" id="form" novalidate action="" method="POST">
+          <input
+            class="form__input"
+            id="email"
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required>
+          <button class="form__btn" type="submit">Reserve your spot</button>
+        </form>
+
+        <div class="confirm" id="confirm" role="status" aria-live="polite">
+          <p class="confirm__eyebrow">Reserved · Position <span id="position">—</span> of 500</p>
+          <p class="confirm__line">Your place is held. We'll write once, when Vol. I opens.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         Signature
+         ================================================================ -->
+    <div style="text-align: center; padding: 48px 0 32px; border-top: 0.5px solid var(--line-inv); font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: 14px; color: var(--fg-faint-inv);">
+      Built by a purple belt in Marseille. Five years on the mat.
+    </div>
+
+    <!-- ================================================================
+         Footer
+         ================================================================ -->
+    <footer class="footer" data-screen-label="Footer">
+      <span>Looking for Brazilian Jiu-Jitsu · MMXXVI</span>
+      <nav class="footer__social" aria-label="Elsewhere">
+        <a href="https://substack.com/@lfbjj" aria-label="Substack">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 5h18M3 11h18M3 17l9 4 9-4v-2H3v2z"/>
+          </svg>
+          <span>Substack</span>
+        </a>
+        <a href="https://www.instagram.com/lookingforbrazilianjujitsu/" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18"/>
+            <circle cx="12" cy="12" r="4.5"/>
+            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
+      </nav>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById('form');
+      const wrap = document.getElementById('formWrap');
+      const confirmEl = document.getElementById('confirm');
+      const position = document.getElementById('position');
+      const input = document.getElementById('email');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const value = input.value.trim();
+        if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          input.focus();
+          return;
+        }
+        const seed = [...value].reduce((a, c) => a + c.charCodeAt(0), 0);
+        const num = 100 + (seed % 380);
+        position.textContent = String(num).padStart(3, '0');
+        wrap.classList.add('is-submitted');
+        confirmEl.classList.add('is-shown');
+      });
+    })();
+  </script>
+</body>
+</html>

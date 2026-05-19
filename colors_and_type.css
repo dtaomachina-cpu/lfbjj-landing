@@ -1,0 +1,285 @@
+/* =====================================================================
+   Looking for Jiu-Jitsu — Colors & Type
+   ---------------------------------------------------------------------
+   Premium BJJ training notebook brand. Editorial restraint,
+   Moleskine-inspired warmth, collector's-object aesthetic.
+   ===================================================================== */
+
+/* Webfonts ----------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@200;300;400;500&display=swap');
+
+:root {
+  /* -------------------------------------------------------------------
+     COLOR — Paper & Ink
+     ------------------------------------------------------------------- */
+  --paper:           #faf9f6;  /* primary surface — warm off-white */
+  --paper-deep:      #f4f2ec;  /* secondary surface, edges of pages */
+  --paper-shadow:    #ebe8e0;  /* subtle inset, page gutter */
+  --ink:             #0a0a0a;  /* primary type, primary buttons */
+  --ink-soft:        #1a1a1a;  /* hover/press on ink surfaces */
+  --ink-muted:       #4a4845;  /* secondary type */
+  --ink-faint:       #8a857c;  /* tertiary type, captions */
+  --ink-line:        #c9c4b8;  /* hairlines, dividers (0.5px borders) */
+  --ink-line-soft:   #e3dfd4;  /* subtler hairlines on cards */
+
+  /* -------------------------------------------------------------------
+     COLOR — Belt Hierarchy (volume / edition accents only)
+     Used as a single accent stripe per volume — never decoration.
+     ------------------------------------------------------------------- */
+  --belt-white:    #f5f3ec;
+  --belt-blue:     #1e3a5f;
+  --belt-purple:   #3a2456;
+  --belt-brown:    #3d2817;
+  --belt-black:    #0a0a0a;
+  --belt-stripe:   #b8001f;  /* the red stripe on every belt tip */
+
+  /* -------------------------------------------------------------------
+     SEMANTIC
+     ------------------------------------------------------------------- */
+  --bg:              var(--paper);
+  --bg-alt:          var(--paper-deep);
+  --bg-inverse:      var(--ink);
+
+  --fg:              var(--ink);
+  --fg-soft:         var(--ink-muted);
+  --fg-faint:        var(--ink-faint);
+  --fg-inverse:      var(--paper);
+
+  --border:          var(--ink-line);
+  --border-soft:     var(--ink-line-soft);
+  --border-strong:   var(--ink);
+
+  --accent:          var(--ink);          /* default accent is ink */
+  --accent-volume:   var(--belt-blue);    /* override per volume */
+
+  /* -------------------------------------------------------------------
+     TYPE — Families
+     ------------------------------------------------------------------- */
+  --font-display: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
+  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+
+  /* -------------------------------------------------------------------
+     TYPE — Scale (collector-print scale; generous, restrained)
+     ------------------------------------------------------------------- */
+  --fs-display:   clamp(56px, 8vw, 112px);
+  --fs-h1:        clamp(40px, 5vw, 72px);
+  --fs-h2:        clamp(28px, 3.4vw, 48px);
+  --fs-h3:        24px;
+  --fs-h4:        18px;
+  --fs-body:      15px;
+  --fs-body-sm:   13px;
+  --fs-caption:   11px;
+  --fs-eyebrow:   10px;
+
+  --lh-tight:     1.05;
+  --lh-snug:      1.2;
+  --lh-normal:    1.5;
+  --lh-relaxed:   1.7;
+
+  --tracking-display:  -0.01em;
+  --tracking-tight:    -0.005em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.08em;
+  --tracking-eyebrow:  0.22em;  /* small caps eyebrows */
+
+  --weight-display:   300;   /* italic serif headlines */
+  --weight-body:      300;   /* Inter Light */
+  --weight-body-em:   400;
+  --weight-strong:    500;
+
+  /* -------------------------------------------------------------------
+     SPACING — generous, editorial
+     ------------------------------------------------------------------- */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   24px;
+  --space-6:   32px;
+  --space-7:   48px;
+  --space-8:   64px;
+  --space-9:   96px;
+  --space-10:  144px;
+  --space-11:  192px;
+
+  --gutter:    48px;
+  --column:    72px;
+
+  /* -------------------------------------------------------------------
+     LAYOUT
+     ------------------------------------------------------------------- */
+  --measure:        62ch;     /* readable line length */
+  --max-content:    1280px;
+  --max-narrow:     720px;
+  --max-prose:      640px;
+
+  /* -------------------------------------------------------------------
+     BORDERS — hairline-first
+     ------------------------------------------------------------------- */
+  --hairline:    0.5px solid var(--border);
+  --hairline-soft: 0.5px solid var(--border-soft);
+  --line-1:      1px solid var(--border-strong);
+
+  /* No rounded corners on buttons/cards. Notebooks have square corners. */
+  --radius-0:     0;
+  --radius-sm:    1px;   /* effectively none — used sparingly */
+
+  /* -------------------------------------------------------------------
+     SHADOWS — almost never used. Paper sits flat.
+     ------------------------------------------------------------------- */
+  --shadow-none:   none;
+  --shadow-page:   0 1px 0 rgba(10,10,10,0.04), 0 12px 28px -18px rgba(10,10,10,0.18);
+  --shadow-volume: 0 24px 48px -28px rgba(10,10,10,0.35), 0 2px 0 rgba(10,10,10,0.06);
+
+  /* -------------------------------------------------------------------
+     MOTION — restrained, slow, ink-like
+     ------------------------------------------------------------------- */
+  --ease-ink:      cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --ease-paper:    cubic-bezier(0.4, 0.0, 0.2, 1.0);
+  --dur-quick:     180ms;
+  --dur-base:      320ms;
+  --dur-slow:      560ms;
+}
+
+/* =====================================================================
+   SEMANTIC ROLES — element defaults
+   Apply by including this stylesheet; element selectors below carry
+   the brand voice. Override only when intentional.
+   ===================================================================== */
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--tracking-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display / H1 — italic Cormorant, generous leading */
+.display, h1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-display);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg);
+  margin: 0;
+}
+
+h1 { font-size: var(--fs-h1); }
+
+h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-weight: var(--weight-body-em);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-normal);
+  margin: 0;
+}
+
+h4 {
+  font-family: var(--font-body);
+  font-weight: var(--weight-strong);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+p {
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-soft);
+  margin: 0 0 var(--space-4) 0;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+/* Eyebrow — small caps, wide tracking, used above titles */
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--weight-strong);
+  font-size: var(--fs-eyebrow);
+  line-height: 1;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* Caption — for image captions, page numbers, footnotes */
+.caption {
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-normal);
+  letter-spacing: 0.02em;
+  color: var(--fg-faint);
+}
+
+/* Pull quote — italic display */
+.pull-quote, blockquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  color: var(--fg);
+  border: none;
+  padding: 0;
+  margin: var(--space-7) 0;
+}
+
+/* Editorial number — for volume markers, page numbers */
+.editorial-number {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-display);
+  font-size: var(--fs-h1);
+  line-height: 1;
+  color: var(--fg);
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-body-sm);
+  letter-spacing: 0;
+}
+
+/* Links — underlined, ink, no color shift */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 4px;
+  transition: opacity var(--dur-quick) var(--ease-ink);
+}
+a:hover { opacity: 0.6; }
+
+hr {
+  border: none;
+  border-top: var(--hairline);
+  margin: var(--space-7) 0;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}

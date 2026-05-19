@@ -647,25 +647,8 @@
     <section class="ask" id="reserve" data-screen-label="05 Ask">
       <h2 class="ask__title">Reserve your spot.</h2>
 
-      <div class="form-wrap" id="formWrap">
-        <!-- TODO: Configure form action with Substack endpoint or webhook -->
-        <!-- Options: (1) Direct Substack form, (2) Webhook to email service, (3) Custom backend -->
-        <form class="form" id="form" novalidate action="" method="POST">
-          <input
-            class="form__input"
-            id="email"
-            type="email"
-            name="email"
-            placeholder="your@email.com"
-            autocomplete="email"
-            required>
-          <button class="form__btn" type="submit">Reserve your spot</button>
-        </form>
-
-        <div class="confirm" id="confirm" role="status" aria-live="polite">
-          <p class="confirm__eyebrow">Reserved · Position <span id="position">—</span> of 500</p>
-          <p class="confirm__line">Your place is held. We'll write once, when Vol. I opens.</p>
-        </div>
+      <div class="form-wrap" id="formWrap" style="display: flex; justify-content: center;">
+        <iframe src="https://lfbjj.substack.com/embed" width="480" height="320" style="border: 1px solid #EEE; background: white" frameborder="0" scrolling="no"></iframe>
       </div>
     </section>
 
@@ -701,28 +684,6 @@
 
   </main>
 
-  <script>
-    (function () {
-      const form = document.getElementById('form');
-      const wrap = document.getElementById('formWrap');
-      const confirmEl = document.getElementById('confirm');
-      const position = document.getElementById('position');
-      const input = document.getElementById('email');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const value = input.value.trim();
-        if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          input.focus();
-          return;
-        }
-        const seed = [...value].reduce((a, c) => a + c.charCodeAt(0), 0);
-        const num = 100 + (seed % 380);
-        position.textContent = String(num).padStart(3, '0');
-        wrap.classList.add('is-submitted');
-        confirmEl.classList.add('is-shown');
-      });
-    })();
-  </script>
+  <!-- Form handler moved to Substack embed -->
 </body>
 </html>
